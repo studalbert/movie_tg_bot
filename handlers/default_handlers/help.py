@@ -1,7 +1,5 @@
 from telebot.types import ReplyKeyboardRemove
-
 from loader import bot
-
 
 @bot.message_handler(commands=['help'])
 def help(message):

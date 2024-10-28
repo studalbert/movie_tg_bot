@@ -20,3 +20,6 @@ class HighBudgetMovie(StatesGroup):
     genre = State()
     quantity = State()
     nones = State()
+
+class HistoryDate(StatesGroup):
+    date = State()
