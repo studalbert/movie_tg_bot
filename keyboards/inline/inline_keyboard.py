@@ -1,5 +1,6 @@
 from telebot import types
 
+
 def get_inline_keyboard():
     keyboard = types.InlineKeyboardMarkup(row_width=2)
     btn1 = types.InlineKeyboardButton(text='movie_search')
@@ -9,4 +10,3 @@ def get_inline_keyboard():
     btn5 = types.InlineKeyboardButton(text='history')
     keyboard.add(btn1, btn2, btn3, btn4, btn5)
     return keyboard
-

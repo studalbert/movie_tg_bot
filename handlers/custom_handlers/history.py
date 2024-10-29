@@ -1,3 +1,4 @@
+from telebot.types import Message
 from database.common.models import User, History
 from keyboards.reply.get_reply_keyboard import get_reply_keyboard
 from loader import bot
@@ -5,13 +6,30 @@ from states.movie_states import HistoryDate
 
 
 @bot.message_handler(commands=['history'])
-def history(message):
+def history(message: Message) -> None:
+    """
+    Обработчик команды /history.
+
+    Устанавливает состояние для ожидания ввода даты,
+    за которую нужно показать историю запросов.
+
+    :param message: Объект сообщения, содержащий информацию о пользователе и чате.
+    """
     bot.set_state(message.from_user.id, HistoryDate.date, message.chat.id)
-    bot.send_message(message.from_user.id, 'Пожалуйста, введите за какую дату показать историю запросов (пример: 01.01.2001)')
+    bot.send_message(message.from_user.id,
+                     'Пожалуйста, введите за какую дату показать историю запросов (пример: 01.01.2001)')
+
 
 @bot.message_handler(state=HistoryDate.date)
-def handle_history(message):
+def handle_history(message: Message) -> None:
+    """
+    Обработчик состояния ожидания ввода даты для показа истории запросов.
 
+    Проверяет, зарегистрирован ли пользователь, и выводит
+    запросы за указанную дату. Если запросов нет, отправляет соответствующее сообщение.
+
+    :param message: Объект сообщения, содержащий информацию о пользователе и чате.
+    """
     user_id = message.from_user.id
     user = User.get_or_none(User.user_id == user_id)
     if user is None:
@@ -31,4 +49,4 @@ def handle_history(message):
             bot.send_photo(message.from_user.id, movie.poster)
             bot.send_message(message.from_user.id, movie)
         bot.send_message(message.chat.id, 'Чтобы вывести доступные команды нажмите на кнопку help',
-                                               reply_markup=get_reply_keyboard())
+                         reply_markup=get_reply_keyboard())

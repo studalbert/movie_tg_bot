@@ -1,9 +1,19 @@
+from typing import Any, Dict
 from datetime import datetime
 from config import DATE_FORMAT
 from database.common.models import History
 from keyboards.reply.get_reply_keyboard import get_reply_keyboard
 
-def print_and_safe_info(bot, message, count, response_data):
+
+def print_and_safe_info(bot, message: Any, count: str, response_data: Dict[str, Any]) -> None:
+    """
+    Отправляет пользователю информацию о фильмах и сохраняет историю запросов в базе данных.
+
+    :param bot: Объект бота для отправки сообщений.
+    :param message: Объект сообщения, содержащий информацию о пользователе и чате.
+    :param count: Количество фильмов для отображения.
+    :param response_data: Данные о фильмах, полученные от API.
+    """
     due_date_string = datetime.now().strftime(DATE_FORMAT)
     try:
         for i in range(int(count)):

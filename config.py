@@ -9,4 +9,3 @@ API_KEY = os.getenv("API_KEY")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 DATE_FORMAT = "%d.%m.%Y"
 URL = 'https://api.kinopoisk.dev/v1.4/movie?page=1'
-
